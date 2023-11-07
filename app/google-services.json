@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "606068032814",
+    "firebase_url": "https://academicx-69a64-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "academicx-69a64",
+    "storage_bucket": "academicx-69a64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606068032814:android:2efaf49886130bbffba6bf",
+        "android_client_info": {
+          "package_name": "snakex.academicx.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMBfFy6PbgshvWfELcI0wUbGr3fNeT7Sc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

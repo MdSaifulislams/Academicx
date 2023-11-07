@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   tools:context=".LogIn.SignIn">
+
+
+
+<ScrollView
+   android:layout_width="match_parent"
+   android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+     android:id="@+id/snakex_logo"
+     android:layout_width="250dp"
+     android:layout_height="250dp"
+     android:src="@mipmap/ic_launcher_foreground"
+     app:layout_constraintHorizontal_bias="0.503"
+     app:layout_constraintLeft_toLeftOf="parent"
+     app:layout_constraintRight_toRightOf="parent"
+     app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+     android:id="@+id/helperText"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:text="Login as an user"
+     android:textAlignment="center"
+     android:textSize="20sp"
+     app:layout_constraintStart_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@id/snakex_logo" />
+
+
+
+
+
+
+
+
+  <com.google.android.material.textfield.TextInputLayout
+     android:id="@+id/email_layout"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="20dp"
+     style="@style/Widget.Design.TextInputLayout"
+     app:layout_constraintTop_toBottomOf="@id/helperText"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintEnd_toEndOf="parent">
+
+
+    <com.google.android.material.textfield.TextInputEditText
+       android:id="@+id/email"
+       android:layout_width="wrap_content"
+       android:minWidth="250dp"
+       android:layout_height="wrap_content"
+       android:drawableStart="@drawable/email_icon"
+       android:maxWidth="300dp"
+       android:hint="Email"
+       android:inputType="textEmailAddress"
+       android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+  <com.google.android.material.textfield.TextInputLayout
+     android:id="@+id/password_layout"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="20dp"
+     app:endIconMode="password_toggle"
+     style="@style/Widget.Design.TextInputLayout"
+     app:layout_constraintTop_toBottomOf="@id/email_layout"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintEnd_toEndOf="parent">
+
+
+    <com.google.android.material.textfield.TextInputEditText
+       android:id="@+id/password"
+       android:layout_width="250dp"
+       android:layout_height="wrap_content"
+       android:textSize="10dp"
+       android:inputType="textPassword"
+       android:hint="Password"
+       android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+       />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+  <Button
+     android:id="@+id/loginButton"
+     android:layout_width="@dimen/_150sdp"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="70dp"
+     android:background="@drawable/edit_shape"
+     android:fontFamily="@font/merriweather_italic"
+     android:padding="5dp"
+     android:text="Sign In"
+     android:layout_marginEnd="@dimen/_20sdp"
+     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintTop_toBottomOf="@id/password_layout" />
+
+
+
+  <ProgressBar
+     android:id="@+id/progressbar"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:visibility="gone"
+     app:layout_constraintTop_toTopOf="@id/loginButton"
+     app:layout_constraintBottom_toBottomOf="@id/loginButton"
+     app:layout_constraintEnd_toEndOf="@id/loginButton"
+     app:layout_constraintStart_toStartOf="@id/loginButton"/>
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

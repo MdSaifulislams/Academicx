@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -21,7 +21,9 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import snakex.academicx.com.Home.Home
 import snakex.academicx.com.Methods
+import snakex.academicx.com.R
 import snakex.academicx.com.databinding.SignUpWithEmailBinding
+import java.io.File
 import java.util.Objects
 
 
@@ -34,14 +36,24 @@ class SignUpWithEmail : Fragment() {
     private  var databaseReference : DatabaseReference? = null
     private var storageReference : StorageReference? = null
 
-   private  var UserId : String? = null
    private  var Name: String? = null
+   var RollNumber: String? = null
+   var RegistrationNumber: String? = null
+   var ClassName: String? = null
+   var Section: String? = null
+   var AcademicName: String? = null
+   var PhoneNumber: String? = null
+
+   private  var UserId : String? = null
    private  var Email: String? = null
    private var Password: String? = null
    private var ProfilePhotoUrl:String? = "ProfilePhotoUrl"
+   private var CompromiseProfilePhotoUrl:String? = "CompromiseProfilePhotoUrl"
    private  var ProfilePhotoUri : Uri? = null
-   private  var UploadCompleteProfilePhoto = true
+   private  var CompromiseProfilePhotoUri : Uri? = null
+   private  var UploadCompletePhoto = true
 
+   var contextt : SignUpWithEmail = this
 
    override fun onCreateView(
       inflater : LayoutInflater, container : ViewGroup?,
@@ -49,6 +61,7 @@ class SignUpWithEmail : Fragment() {
    ) : View? {
       binding = SignUpWithEmailBinding.inflate(layoutInflater, container, false)
 
+      getBundleData()
       initialise()
       click()
       AddProfilePhoto()
@@ -58,28 +71,22 @@ class SignUpWithEmail : Fragment() {
       return binding!!.root
    }
 
+   private fun getBundleData() {
+      val bundle = this.arguments
+
+      Name = bundle!!.getString("Name")
+      RollNumber = bundle.getString("RollNumber")
+      RegistrationNumber = bundle.getString("RegistrationNumber")
+      ClassName = bundle.getString("ClassName")
+      Section = bundle.getString("Section")
+      AcademicName = bundle.getString("AcademicName")
+      PhoneNumber = bundle.getString("PhoneNumber")
+
+   }
+
    private fun click() {
-//      CreateAccountButtonClick()
+      CreateAccountButtonClick()
 
- var email = "mdsaifulislam908077@gmail.com"
-
-//    firebaseAuth!!.sendSignInLinkToEmail(email,"saiful").addOnCompleteListener(
-//       { task ->
-//
-//       }
-//    )
-
-
-      firebaseAuth!!.signInWithEmailLink(email,email)
-         .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-               Toast.makeText(context, "sus", Toast.LENGTH_SHORT).show()
-
-            } else {
-               Toast.makeText(context, "ff", Toast.LENGTH_SHORT).show()
-            }
-
-         }
    }
 
 
@@ -106,34 +113,46 @@ class SignUpWithEmail : Fragment() {
          if (data != null) {
             if (requestCode == 111) {
                ProfilePhotoUri = data.data
-               binding!!.ProfilePhoto.setImageURI(ProfilePhotoUri)
+
+             var file = File(ProfilePhotoUri.toString())
+
+               binding!!.ProfilePhoto.setImageURI(file.toUri())
+
+//               val cl = Compressor(requireContext()).compressToBitmap(data.data!!.toFile())
+//               binding!!.ProfilePhoto.setImageBitmap(cl)
+
+//               Toast.makeText(context, ""+file.toString(), Toast.LENGTH_SHORT
+//               ).show()
+
+
+
+//               binding!!.ProfilePhoto.setImageURI(ss)
+//               val fileUri = getFilePathFromUri(data.data, requireContext())
+//               val compressedImageFile = Compressor.compress(requireContext(), File(fileUri.path)){
+//                  quality(50) // combine with compressor constraint
+//                  format(Bitmap.CompressFormat.JPEG)
             }
          }
       }
    }
 
+
 //----------------
 
 
-//---------------------------
 
-
-   //----------------
-   //---------------------------
-   private fun takeDataInput() {
-      Name = Objects.requireNonNull(binding!!.phoneNumber.getText()).toString().trim { it <= ' ' }
+   private  fun takeDataInput() {
       Email = Objects.requireNonNull(binding!!.email.text).toString().trim { it <= ' ' }
       Password = Objects.requireNonNull(binding!!.password.text).toString().trim { it <= ' ' }
+
    }
 
 
    private fun checkFullFillInput() {
-      if (Name == "") {
-         binding!!.phoneNumber.setError("Name Required")
-      } else if (Email == "") {
-         binding!!.email.error = "Email Required"
-      } else if (Password == "") {
-         binding!!.password.error = "Password Required"
+      if (Email!!.equals("")) {
+         binding!!.emailLayout.helperText = "Email Required"
+      } else if (Password!!.equals("")) {
+         binding!!.passwordLayout.helperText = "Password Required"
       } else {
          ShowProgressBar()
          CreateAccountVerified()
@@ -144,13 +163,14 @@ class SignUpWithEmail : Fragment() {
    private fun CreateAccountVerified() {
       firebaseAuth!!.createUserWithEmailAndPassword(Email!!, Password!!)
          .addOnSuccessListener { authResult : AuthResult? ->
-            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
+
             initialise()
             getData()
             if (ProfilePhotoUri != null) {
-               UploadCompleteProfilePhoto = false
+               UploadCompletePhoto = false
                setProfilePhotoDataBase()
-               CheckPhotoUpload()
+
             } else {
                SuccessComplete()
             }
@@ -160,29 +180,21 @@ class SignUpWithEmail : Fragment() {
             hideProgressBar()
          }
 
-//
-//      firebaseAuth!!.signInWithEmailLink("mdsaifulislam908077@gmail.com","mdsaifulislam908077@gmail.com")
-//         .addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//               Toast.makeText(context, "sus", Toast.LENGTH_SHORT).show()
-//
-//            } else {
-//               Toast.makeText(context, "ff", Toast.LENGTH_SHORT).show()
-//            }
-//
-//      }
+
    }
 
 
    private fun setProfilePhotoDataBase() {
       storageReference =
-         FirebaseStorage.getInstance().getReference("user").child(UserId!!).child("ProfilePhoto")
+         FirebaseStorage.getInstance().getReference("UserProfilePhoto").child(UserId!!).child("ProfilePhoto")
       storageReference!!.putFile(ProfilePhotoUri!!)
          .addOnSuccessListener { taskSnapshot : UploadTask.TaskSnapshot? ->
             storageReference!!.downloadUrl.addOnSuccessListener { uri : Uri ->
                ProfilePhotoUrl = uri.toString()
-               UploadCompleteProfilePhoto = true
-               CheckPhotoUpload()
+
+
+               setCompromiseProfilePhotoDataBase()
+               SuccessComplete()
             }.addOnFailureListener { e : Exception ->
                Methods.ShowAlertDialog(context, e.localizedMessage, "Warning !")
                hideProgressBar()
@@ -194,36 +206,69 @@ class SignUpWithEmail : Fragment() {
    }
 
 
-   private fun CheckPhotoUpload() {
-      if (!UploadCompleteProfilePhoto) {
-      } else {
-         SuccessComplete()
-      }
+   private fun setCompromiseProfilePhotoDataBase() {
+      storageReference =
+         FirebaseStorage.getInstance().getReference("UserProfilePhoto").child(UserId!!).child("CompromiseProfilePhoto")
+      storageReference!!.putFile(CompromiseProfilePhotoUri!!)
+         .addOnSuccessListener { taskSnapshot : UploadTask.TaskSnapshot? ->
+            storageReference!!.downloadUrl.addOnSuccessListener { uri : Uri ->
+               CompromiseProfilePhotoUrl = uri.toString()
+               UploadCompletePhoto = true
+
+               SuccessComplete()
+
+            }.addOnFailureListener { e : Exception ->
+               Methods.ShowAlertDialog(context, e.localizedMessage, "Warning !")
+               hideProgressBar()
+            }
+         }.addOnFailureListener { e : Exception ->
+            Methods.ShowAlertDialog(context, e.localizedMessage, "Warning !")
+            hideProgressBar()
+         }
    }
 
+
+
+
    private fun SuccessComplete() {
+
       val userData : MutableMap<String, Any> = HashMap()
       userData["UserId"] = UserId!!
       userData["ProfilePhotoUrl"] = ProfilePhotoUrl!!
+      userData["CompromiseProfilePhotoUrl"] = CompromiseProfilePhotoUrl!!
       userData["CoverPhotoUrl"] = "CoverPhotoUrl"
       userData["Name"] = Name!!
-      userData["userEmail"] = Email!!
-      userData["userPassword"] = Password!!
+      userData["RollNumber"] = RollNumber!!
+      userData["RegistrationNumber"] = RegistrationNumber!!
+      userData["ClassName"] = ClassName!!
+      userData["Section"] = Section!!
+      userData["AcademicName"] = AcademicName!!
+      userData["PhoneNumber"] = PhoneNumber!!
+      userData["Name"] = Name!!
+      userData["Email"] = Email!!
+      userData["Password"] = Password!!
+
       databaseReference!!.child(UserId!!).setValue(userData)
          .addOnCompleteListener { task : Task<Void?> ->
             if (task.isSuccessful) {
+
                hideProgressBar()
-               Log.i("TAG", " 252 ")
+               Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                startActivity(Intent(context, Home::class.java))
                requireActivity().finish()
+
+
+               val fragmentTransaction = requireFragmentManager().beginTransaction()
+
+               fragmentTransaction.replace(R.id.sign_up_with_email,  verificationUser()).addToBackStack(null).commit()
+
+
             } else {
-               Methods.ShowAlertDialog(
-                  context,
-                  task.exception!!.localizedMessage,
-                  "Warning !"
-               )
+
+               Methods.ShowAlertDialog(context, task.exception!!.localizedMessage, "Warning !")
+
                hideProgressBar()
-               Toast.makeText(context, "us", Toast.LENGTH_SHORT).show()
+
             }
          }
    }

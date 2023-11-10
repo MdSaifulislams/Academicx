@@ -37,15 +37,15 @@ class Start : AppCompatActivity() {
 
          override fun onFinish() {
 
-           if(firebaseUser == null){
+//           if(firebaseUser == null){
 
               startActivity(Intent(this@Start,LoginActivity::class.java))
 
-           }else {
-
-              startActivity(Intent(this@Start, Home::class.java))
-
-           }
+//           }else {
+//
+//              startActivity(Intent(this@Start, Home::class.java))
+//
+//           }
 
             binding!!.progressBar.visibility = View.INVISIBLE
             finish()

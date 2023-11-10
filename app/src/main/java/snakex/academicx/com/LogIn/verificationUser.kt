@@ -5,21 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import snakex.academicx.com.databinding.VerficationUserBinding
+import snakex.academicx.com.R
+import snakex.academicx.com.databinding.VerificationUserBinding
 
+class verificationUser : Fragment() {
 
-class VerificationUser : Fragment() {
-
-   var binding : VerficationUserBinding ? = null
-
+   var binding : VerificationUserBinding? = null
    override fun onCreateView(
       inflater : LayoutInflater, container : ViewGroup?,
       savedInstanceState : Bundle?
    ) : View? {
 
-      binding = VerficationUserBinding.inflate(layoutInflater,container,false)
-
+      binding = VerificationUserBinding.inflate(layoutInflater,container,false)
       return binding!!.root
    }
 
-   }
+
+}

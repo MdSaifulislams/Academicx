@@ -209,6 +209,34 @@
 
 
 
+      <com.google.android.material.textfield.TextInputLayout
+         android:id="@+id/phoneNumberLayout"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:fontFamily="@font/merriweather_italic"
+         android:layout_gravity="center"
+         app:helperTextTextColor="@color/red"
+         style="@style/Widget.Design.TextInputLayout"
+         app:layout_constraintTop_toBottomOf="@id/academic_layout"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+           android:id="@+id/phoneNumber"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:drawableStart="@drawable/call"
+           android:hint="Phone Number"
+           android:inputType="number"
+           android:maxWidth="320dp"
+           android:minWidth="250dp" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
 
 
       <Button
@@ -223,7 +251,7 @@
          android:text="Next"
          android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
          app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintTop_toBottomOf="@id/academic_layout" />
+         app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout" />
 
 
 

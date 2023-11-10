@@ -3,9 +3,12 @@
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   android:id="@+id/verificationUser"
    android:background="?android:background"
-   tools:context=".LogIn.VerificationUser">
+   tools:context=".LogIn.verificationUser">
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

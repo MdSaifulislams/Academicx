@@ -22,7 +22,7 @@
      android:layout_height="wrap_content"
      app:tabSelectedTextColor="@color/teal_200"
      app:tabIconTint="@color/tab_color"
-     app:tabIndicatorColor="?android:textColor"
+     app:tabIndicatorColor="@color/white"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintStart_toStartOf="parent"/>
 

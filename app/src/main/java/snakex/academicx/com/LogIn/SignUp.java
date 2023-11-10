@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +34,7 @@ SignUpBinding binding;
 
 DatabaseReference databaseReference;
 
-String  Name, RollNumber, RegistrationNumber,ClassName,Section, AcademicName;
+String  Name, RollNumber, RegistrationNumber,ClassName,Section, AcademicName,PhoneNumber;
 
 List<String> classNameList;
 List<String> organizationNameList;
@@ -50,6 +51,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	 getClassNameData();
 	 getOrganizationData();
 	 click();
+
 
 
 	 return binding.getRoot();
@@ -73,7 +75,6 @@ private void setSectionSpinner() {
 	 binding.section.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
 				   Section = sectionName[i];
 			}
 
@@ -178,7 +179,7 @@ private void takeDataInput() {
 	 RegistrationNumber = Objects.requireNonNull(binding.registrationNumber.getText()).toString().trim();
 	 ClassName  = Objects.requireNonNull(binding.className.getText()).toString().trim();
 	 AcademicName = Objects.requireNonNull(binding.academic.getText()).toString().trim();
-
+   PhoneNumber = binding.phoneNumber.getText().toString().trim();
 
 }
 
@@ -205,8 +206,9 @@ private void checkFullFillInput() {
 	 } else if (AcademicName.equals("")) {
 			binding.academicLayout.setHelperText("Academic Required!");
 
-	 }
-	 else {
+	 }else if (PhoneNumber.equals("")){
+			binding.phoneNumberLayout.setHelperText("Phone Number Required!");
+	 } else {
 
 			GoSignUpWithEmail();
 
@@ -225,10 +227,14 @@ private void GoSignUpWithEmail() {
 	 bundle.putString("ClassName",ClassName);
 	 bundle.putString("Section",Section);
 	 bundle.putString("AcademicName",AcademicName);
+	 bundle.putString("PhoneNumber",PhoneNumber);
+
+	 Fragment fragment = new SignUpWithEmail();
+	 fragment.setArguments(bundle);
 
 	 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-	 fragmentTransaction.replace(R.id.sign_up,new SignUpWithEmail()).addToBackStack(null).commit();
+	 fragmentTransaction.replace(R.id.sign_up,fragment).addToBackStack(null).commit();
 
 }
 

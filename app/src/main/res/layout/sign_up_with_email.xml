@@ -77,35 +77,6 @@
 
 
 
-      <com.google.android.material.textfield.TextInputLayout
-         android:id="@+id/phoneNumberLayout"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="@dimen/_10sdp"
-         android:fontFamily="@font/merriweather_italic"
-         android:layout_gravity="center"
-         style="@style/Widget.Design.TextInputLayout"
-         app:layout_constraintTop_toBottomOf="@id/welcomeText"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintEnd_toEndOf="parent">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-           android:id="@+id/phoneNumber"
-           android:layout_width="wrap_content"
-           android:minWidth="250dp"
-           android:layout_height="wrap_content"
-           android:maxWidth="320dp"
-           android:inputType="text"
-           android:drawableStart="@drawable/call"
-           android:hint="Name"
-           />
-
-      </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
 
       <com.google.android.material.textfield.TextInputLayout
          android:id="@+id/email_layout"
@@ -113,23 +84,23 @@
          android:layout_height="wrap_content"
          android:fontFamily="@font/merriweather_italic"
          android:layout_gravity="center"
+         app:helperTextTextColor="@color/red"
          android:layout_marginTop="@dimen/_20sdp"
          style="@style/Widget.Design.TextInputLayout"
-         app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"
+         app:layout_constraintTop_toBottomOf="@id/welcomeText"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintEnd_toEndOf="parent">
 
 
-        <com.google.android.material.textfield.TextInputEditText
+        <AutoCompleteTextView
            android:id="@+id/email"
            android:layout_width="wrap_content"
-           android:minWidth="250dp"
-           android:maxWidth="320dp"
            android:layout_height="wrap_content"
            android:drawableStart="@drawable/email_icon"
-           android:inputType="textEmailAddress"
            android:hint="Email"
-           />
+           android:inputType="textEmailAddress"
+           android:maxWidth="320dp"
+           android:minWidth="250dp" />
 
       </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,13 +113,14 @@
          android:layout_height="wrap_content"
          android:layout_marginTop="20dp"
          app:endIconMode="password_toggle"
+         app:helperTextTextColor="@color/red"
          style="@style/Widget.Design.TextInputLayout"
          app:layout_constraintTop_toBottomOf="@id/email_layout"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintEnd_toEndOf="parent">
 
 
-        <com.google.android.material.textfield.TextInputEditText
+        <AutoCompleteTextView
            android:id="@+id/password"
            android:layout_width="250dp"
            android:layout_height="wrap_content"
@@ -161,55 +133,23 @@
 
 
 
-      <com.google.android.material.textfield.TextInputLayout
-         android:id="@+id/confirmPassword_layout"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="20dp"
-         style="@style/Widget.Design.TextInputLayout"
-         app:layout_constraintTop_toBottomOf="@id/password_layout"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintEnd_toEndOf="parent">
-
-
-      <com.google.android.material.textfield.TextInputEditText
-         android:id="@+id/confirmPassword"
-         android:layout_width="250dp"
-         android:layout_height="wrap_content"
-         android:inputType="textPassword"
-         android:hint="Confrim Password!"
-         />
-
-      </com.google.android.material.textfield.TextInputLayout>
-
 
 
       <Button
          android:id="@+id/CreateAccountButton"
-         android:layout_width="300dp"
+         android:layout_width="@dimen/_150sdp"
          android:layout_height="wrap_content"
          android:layout_marginTop="40dp"
+         android:layout_marginEnd="@dimen/_50sdp"
          android:background="@drawable/edit_shape"
          android:fontFamily="@font/merriweather_italic"
          android:padding="5dp"
          android:text="Create account"
          android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
          app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.504"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@id/confirmPassword_layout" />
+         app:layout_constraintTop_toBottomOf="@id/password_layout" />
 
 
-      <ProgressBar
-         android:id="@+id/ProgressBar"
-         android:accessibilityPaneTitle="Uploding..."
-         android:visibility="gone"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         app:layout_constraintTop_toTopOf="@id/CreateAccountButton"
-         app:layout_constraintBottom_toBottomOf="@id/CreateAccountButton"
-         app:layout_constraintStart_toStartOf="@id/CreateAccountButton"
-         app:layout_constraintEnd_toEndOf="@id/CreateAccountButton"/>
 
       <ProgressBar
          android:id="@+id/progressbar"
